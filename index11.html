@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blynk操控</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            margin: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blynk操控</h1>
+    <div class="button-container">
+        <button id="button1" onclick="toggleButton(this, 'https://sgp1.blynk.cloud/external/api/update?token=zSOLEsDJdqG7SqFL0gvH5c3kvOIp_c8Q&v0=1', 'https://sgp1.blynk.cloud/external/api/update?token=zSOLEsDJdqG7SqFL0gvH5c3kvOIp_c8Q&v0=0')">鋁罐(開啟)</button>
+        <button id="button3" onclick="toggleButton(this, 'https://sgp1.blynk.cloud/external/api/update?token=zSOLEsDJdqG7SqFL0gvH5c3kvOIp_c8Q&v1=1', 'https://sgp1.blynk.cloud/external/api/update?token=zSOLEsDJdqG7SqFL0gvH5c3kvOIp_c8Q&v0=0')">寶特瓶 (開啟)</button>
+        <button id="button2" onclick="toggleButton(this, 'https://sgp1.blynk.cloud/external/api/update?token=zSOLEsDJdqG7SqFL0gvH5c3kvOIp_c8Q&v2=1', 'https://sgp1.blynk.cloud/external/api/update?token=zSOLEsDJdqG7SqFL0gvH5c3kvOIp_c8Q&v2=0')">一般垃圾 (開啟)</button>
+    </div>
+
+    <script>
+        function toggleButton(button, openUrl, closeUrl) {
+            if (button.textContent.includes('開啟')) {
+                // 開啟狀態 -> 執行開啟URL
+                executeUrl(openUrl);
+                button.textContent = button.textContent.replace('開啟', '關閉');
+            } else {
+                // 關閉狀態 -> 執行關閉URL
+                executeUrl(closeUrl);
+                button.textContent = button.textContent.replace('關閉', '開啟');
+            }
+        }
+
+        function executeUrl(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text(); // 可以根據需要改成 response.json()
+                })
+                .then(data => console.log('URL executed:', url, 'Response:', data))
+                .catch(error => console.error('Error executing URL:', error));
+        }
+    </script>
+</body>
+</html>
